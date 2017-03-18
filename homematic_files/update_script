@@ -1,0 +1,28 @@
+#!/bin/sh
+
+mkdir -p /mnt
+if ["$1" == ""]; then
+    echo "CCU1"
+	mount -t yaffs /dev/mtdblock3 /mnt
+	rm -rf /mnt/etc/config/addons/automower
+	mkdir /mnt/etc/config/addons/automower
+	cp ./automower/socat_ccu1 /mnt/etc/config/addons/automower/socat
+else
+    echo "CCU2"
+    mount -t ubifs ubi1:user /mnt
+	rm -rf /mnt/etc/config/addons/automower
+	mkdir /mnt/etc/config/addons/automower
+	cp ./automower/socat_ccu2 /mnt/etc/config/addons/automower/socat
+fi
+
+cp ./automower/automower.tcl /mnt/etc/config/addons/automower/
+cp ./automower/daemonize.tcl /mnt/etc/config/addons/automower/
+chmod 755 /mnt/etc/config/addons/automower/automower.tcl
+chmod 755 /mnt/etc/config/addons/automower/daemonize.tcl
+chmod 755 /mnt/etc/config/addons/automower/socat
+
+rm -rf /mnt/etc/config/rc.d/automower
+cp ./automower_addon /mnt/etc/config/rc.d
+chmod +x /mnt/etc/config/rc.d/automower_addon
+
+umount /mnt

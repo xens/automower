@@ -1,0 +1,21 @@
+#!/bin/sh
+
+case "$1" in
+"")
+	;;
+info)
+    echo "Info: <center><b>Automower-Steuerung</b></center>"
+    echo "Info: <center>Kommunikationsschnittstelle zum Automower (G2)</center>"
+    echo "Name: Automower"
+    echo "Version: 7.0"
+    echo "Operations: uninstall"
+    ;;
+restart)
+	;;
+stop)
+	;;
+uninstall)
+	rm -rf /etc/config/rc.d/automower_addon
+	rm -rf /etc/config/addons/automower
+	;;
+esac
